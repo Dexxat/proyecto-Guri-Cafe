@@ -402,7 +402,10 @@ a:hover{ color:var(--terracotta); }
 
 /* ---------- Footer ---------- */
 .site-footer{
-  background:#7a5437;
+  background:
+    linear-gradient(180deg, rgba(58,41,28,.90) 0%, rgba(36,25,17,.93) 100%),
+    url("../assets/img/fondo-hero.jpeg") center center / cover no-repeat;
+  background-color:#2a1d13;
   color:var(--cream-soft);
   padding:52px 0;
   text-align:center;
@@ -410,7 +413,7 @@ a:hover{ color:var(--terracotta); }
 .footer-inner{ display:flex; flex-direction:column; align-items:center; gap:10px; }
 .site-footer img{ width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.25); }
 .site-footer .footer-art{
-  width:min(315px, 80vw); height:auto;
+  width:min(189px, 62vw); height:auto;
   border-radius:14px; object-fit:contain;
   border:1px solid rgba(255,255,255,.18);
   margin-bottom:14px;
