@@ -28,8 +28,9 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; background:#2a1d13; }
 html,body{ overflow-x:hidden; }
+html,body{ overscroll-behavior-y:none; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
 
 body{
@@ -42,7 +43,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-#contenido{ padding-top:72px; }
+#contenido{ padding-top:83px; }
 
 img{ max-width:100%; display:block; }
 
@@ -100,12 +101,12 @@ a:hover{ color:var(--terracotta); }
   background:rgba(199,149,104,.94);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid transparent;
+  border-bottom:2px solid #000;
   transition:border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
 }
 .site-header.scrolled{
-  border-bottom-color:var(--line);
-  box-shadow:0 10px 30px -24px rgba(58,42,28,.6);
+  border-bottom-color:#000;
+  box-shadow:0 10px 30px -24px rgba(0,0,0,.7);
 }
 .site-header .btn-primary{
   background:transparent;
@@ -121,11 +122,11 @@ a:hover{ color:var(--terracotta); }
 }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
-  gap:18px; min-height:72px;
+  gap:18px; min-height:83px;
 }
-.brand{ display:flex; align-items:center; gap:12px; color:var(--ink); }
-.brand img{ width:52px; height:52px; border-radius:50%; object-fit:cover; }
-.brand-text{ font-family:var(--font-head); font-size:1.32rem; letter-spacing:.01em; }
+.brand{ display:flex; align-items:center; gap:13px; color:var(--ink); }
+.brand img{ width:60px; height:60px; border-radius:50%; object-fit:cover; }
+.brand-text{ font-family:var(--font-head); font-size:1.5rem; letter-spacing:.01em; }
 .brand-text em{ font-style:italic; color:var(--brown-mid); }
 
 .nav{ display:flex; align-items:center; gap:28px; }
@@ -157,7 +158,7 @@ a:hover{ color:var(--terracotta); }
 @media (max-width:860px){
   .nav-toggle{ display:flex; }
   .nav{
-    position:fixed; inset:72px 0 auto 0;
+    position:fixed; inset:83px 0 auto 0;
     flex-direction:column; align-items:stretch; gap:0;
     background:var(--cream-soft);
     border-bottom:1px solid var(--line);
@@ -413,7 +414,7 @@ a:hover{ color:var(--terracotta); }
 .footer-inner{ display:flex; flex-direction:column; align-items:center; gap:10px; }
 .site-footer img{ width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.25); }
 .site-footer .footer-art{
-  width:min(189px, 62vw); height:auto;
+  width:min(151px, 55vw); height:auto;
   border-radius:14px; object-fit:contain;
   border:1px solid rgba(255,255,255,.18);
   margin-bottom:14px;
