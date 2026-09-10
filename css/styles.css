@@ -351,8 +351,19 @@ a:hover{ color:var(--terracotta); }
 /* ---------- Menú ---------- */
 .nosotros{ padding-bottom:0; }
 .menu{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
   padding-top:44px;
   background:linear-gradient(180deg, transparent, rgba(251,246,234,.6) 12%, rgba(251,246,234,.6) 88%, transparent);
+}
+.menu::before{
+  content:"";
+  position:absolute; inset:-40px; z-index:-1;
+  background:url("../assets/img/diseno-footer.jpeg") center 22% / cover no-repeat;
+  filter:blur(16px) saturate(.62) brightness(1.07);
+  opacity:.15;
+  pointer-events:none;
 }
 .menu-head{ text-align:center; max-width:640px; margin:0 auto 44px; }
 .menu-head h2{ font-size:clamp(2.2rem,5vw,3.2rem); margin-bottom:.35em; }
@@ -446,19 +457,12 @@ a:hover{ color:var(--terracotta); }
     url("../assets/img/fondo-hero.jpeg") center center / cover no-repeat;
   background-color:#2a1d13;
   color:var(--cream-soft);
-  padding:52px 0;
+  padding:38px 0;
   text-align:center;
 }
-.footer-inner{ display:flex; flex-direction:column; align-items:center; gap:10px; }
-.site-footer img{ width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.25); }
-.site-footer .footer-art{
-  width:min(151px, 55vw); height:auto;
-  border-radius:14px; object-fit:contain;
-  border:1px solid rgba(255,255,255,.18);
-  margin-bottom:14px;
-}
-.footer-tagline{ font-family:var(--font-head); font-size:1.35rem; margin:8px 0 0; color:#fff; }
-.footer-meta{ font-size:.9rem; margin:0; color:rgba(255,255,255,.8); }
+.footer-inner{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.footer-tagline{ font-family:var(--font-head); font-size:1.2rem; margin:0; color:#fff; }
+.footer-meta{ font-size:.88rem; margin:0; color:rgba(255,255,255,.8); }
 .footer-meta a{ color:#fff; text-decoration:underline; text-underline-offset:2px; }
 .footer-meta a:hover{ color:var(--cream-deep); }
 .footer-legal{ font-size:.8rem; margin:6px 0 0; color:rgba(255,255,255,.55); }
