@@ -176,7 +176,10 @@ a:hover{ color:var(--terracotta); }
 /* ---------- Hero ---------- */
 .hero{
   padding:70px 0 40px;
-  background:linear-gradient(180deg, #3a291c 0%, #2a1d13 100%);
+  background:
+    linear-gradient(180deg, rgba(58,41,28,.90) 0%, rgba(36,25,17,.93) 100%),
+    url("../assets/img/fondo-hero.jpeg") center center / cover no-repeat;
+  background-color:#2a1d13;
   border-bottom:1px solid rgba(0,0,0,.3);
   color:#fff;
 }
