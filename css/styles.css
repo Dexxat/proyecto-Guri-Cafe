@@ -174,7 +174,11 @@ a:hover{ color:var(--terracotta); }
 }
 
 /* ---------- Hero ---------- */
-.hero{ padding:70px 0 40px; }
+.hero{
+  padding:70px 0 40px;
+  background:linear-gradient(180deg, #edeef0 0%, #e5e6e9 60%, #dedfe2 100%);
+  border-bottom:1px solid rgba(58,42,28,.08);
+}
 .hero-grid{
   display:grid; grid-template-columns:1.05fr .95fr;
   gap:54px; align-items:start;
