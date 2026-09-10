@@ -175,13 +175,38 @@ a:hover{ color:var(--terracotta); }
 
 /* ---------- Hero ---------- */
 .hero{
-  padding:70px 0 40px;
+  position:relative;
+  padding:92px 0 40px;
   background:
     linear-gradient(180deg, rgba(58,41,28,.90) 0%, rgba(36,25,17,.93) 100%),
     url("../assets/img/fondo-hero.jpeg") center center / cover no-repeat;
   background-color:#2a1d13;
   border-bottom:1px solid rgba(0,0,0,.3);
   color:#fff;
+}
+.hero > .container{ position:relative; z-index:1; }
+
+/* Guirnalda de foquitos colgando del header */
+.garland{
+  position:absolute; top:0; left:0; right:0; height:66px;
+  overflow:hidden; pointer-events:none; z-index:0;
+}
+.garland svg{ display:block; width:100%; height:100%; }
+.garland .wire{ fill:none; stroke:rgba(255,255,255,.20); stroke-width:1; }
+.garland .bulbs{
+  fill:none; stroke:#f4cd83; stroke-width:6.5; stroke-linecap:round;
+  stroke-dasharray:0.01 22;
+  filter:drop-shadow(0 0 5px rgba(244,205,131,.75));
+  animation:garland-twinkle 3.6s ease-in-out infinite;
+}
+.garland .swag:nth-child(2) .bulbs{ animation-duration:4.4s; animation-delay:-1.6s; }
+.garland .swag:nth-child(3) .bulbs{ animation-duration:3.9s; animation-delay:-.8s; }
+@keyframes garland-twinkle{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+@media (prefers-reduced-motion:reduce){
+  .garland .bulbs{ animation:none; opacity:.92; }
+}
+@media (max-width:600px){
+  .garland{ height:52px; }
 }
 .hero-grid{
   display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
