@@ -16,13 +16,70 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  /* ---- Logo del hero: se achica al scrollear hasta anclarse en el header ---- */
+  var heroLogo = document.querySelector('.hero-logo');
+  var logoSlot = document.querySelector('.hero-logo-slot');
+  var logoTarget = document.querySelector('.brand-logo');
+
+  if (heroLogo && logoSlot && logoTarget) {
+    document.documentElement.classList.add('logo-dock');
+    // Fuera del hero para que ningún transform de .reveal afecte al position:fixed
+    document.body.appendChild(heroLogo);
+
+    var logoTicking = false;
+
+    function placeLogo() {
+      logoTicking = false;
+      var from = logoSlot.getBoundingClientRect();
+      var to = logoTarget.getBoundingClientRect();
+      if (!from.width) return;
+
+      // 0 arriba de todo; 1 cuando el hueco del logo queda tapado por el header
+      var end = Math.max(1, from.bottom + window.scrollY - header.offsetHeight);
+      var p = Math.min(1, Math.max(0, window.scrollY / end));
+      var e = p * p * (3 - 2 * p);
+
+      var x = from.left + (to.left - from.left) * e;
+      var y = from.top + (to.top - from.top) * e;
+      var scale = (from.width + (to.width - from.width) * e) / from.width;
+
+      heroLogo.style.width = from.width + 'px';
+      heroLogo.style.height = from.width + 'px';
+      heroLogo.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+      heroLogo.classList.toggle('is-moving', p > 0);
+      heroLogo.classList.toggle('is-docked', p >= 1);
+    }
+
+    function requestPlaceLogo() {
+      if (!logoTicking) {
+        logoTicking = true;
+        window.requestAnimationFrame(placeLogo);
+      }
+    }
+
+    placeLogo();
+    window.addEventListener('scroll', requestPlaceLogo, { passive: true });
+    window.addEventListener('resize', requestPlaceLogo);
+    window.addEventListener('load', requestPlaceLogo);
+    // Seguir al bloque de texto mientras hace su animación de entrada
+    var heroCopy = logoSlot.closest('.hero-copy');
+    if (heroCopy) heroCopy.addEventListener('transitionend', requestPlaceLogo);
+    var followUntil = Date.now() + 1000;
+    (function follow() {
+      placeLogo();
+      if (Date.now() < followUntil) window.requestAnimationFrame(follow);
+    })();
+  }
+
   /* ---- Menú móvil ---- */
   function closeNav() {
+    header.classList.remove('nav-open');
     nav.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Abrir menú');
   }
   function openNav() {
+    header.classList.add('nav-open');
     nav.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Cerrar menú');

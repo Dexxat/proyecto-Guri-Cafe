@@ -18,6 +18,9 @@
   --green:        #5c6b4a;
   --header-brown: #c79568;
 
+  --header-h:  83px;
+  --marquee-h: 58px;
+
   --font-head: "Fraunces", "Georgia", "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
@@ -42,7 +45,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-#contenido{ padding-top:83px; }
+#contenido{ padding-top:var(--header-h); }
 
 img{ max-width:100%; display:block; }
 
@@ -103,6 +106,7 @@ a:hover{ color:var(--terracotta); }
   border-bottom:2px solid #000;
   transition:border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
 }
+.site-header.nav-open{ z-index:102; }
 .site-header.scrolled{
   border-bottom-color:#000;
   box-shadow:0 10px 30px -24px rgba(0,0,0,.7);
@@ -121,10 +125,12 @@ a:hover{ color:var(--terracotta); }
 }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
-  gap:18px; min-height:83px;
+  gap:18px; min-height:var(--header-h);
 }
 .brand{ display:flex; align-items:center; gap:13px; color:var(--ink); }
-.brand img{ width:60px; height:60px; border-radius:50%; object-fit:cover; }
+.brand-logo{ display:none; width:58px; height:58px; flex:none; }
+.logo-dock .brand-logo{ display:block; }
+@media (max-width:520px){ .brand-logo{ width:50px; height:50px; } }
 .brand-text{ font-family:var(--font-head); font-size:1.5rem; letter-spacing:.01em; }
 .brand-text em{ font-style:italic; color:var(--brown-mid); }
 
@@ -157,7 +163,7 @@ a:hover{ color:var(--terracotta); }
 @media (max-width:860px){
   .nav-toggle{ display:flex; }
   .nav{
-    position:fixed; inset:83px 0 auto 0;
+    position:fixed; inset:var(--header-h) 0 auto 0;
     flex-direction:column; align-items:stretch; gap:0;
     background:var(--cream-soft);
     border-bottom:1px solid var(--line);
@@ -174,13 +180,17 @@ a:hover{ color:var(--terracotta); }
 }
 
 /* ---------- Hero ---------- */
+/* El hero + el marquee ocupan exactamente la primera pantalla */
 .hero{
   position:relative;
-  padding:92px 0 40px;
+  display:flex; flex-direction:column; justify-content:center;
+  min-height:calc(100vh - var(--header-h) - var(--marquee-h));
+  min-height:calc(100svh - var(--header-h) - var(--marquee-h));
+  padding:clamp(34px, 6svh, 60px) 0 clamp(22px, 4svh, 40px);
   background:
-    linear-gradient(180deg, rgba(58,41,28,.90) 0%, rgba(36,25,17,.93) 100%),
+    linear-gradient(180deg, rgba(90,58,34,.9) 0%, rgba(90,58,34,.95) 100%),
     url("../assets/img/fondo-hero.jpeg") center center / cover no-repeat;
-  background-color:#2a1d13;
+  background-color:var(--brown);
   border-bottom:1px solid rgba(0,0,0,.3);
   color:#fff;
 }
@@ -213,33 +223,49 @@ a:hover{ color:var(--terracotta); }
   gap:54px; align-items:stretch;
 }
 .hero-copy{ text-align:left; min-width:0; }
-.hero-eyebrow{ text-align:center; margin-bottom:24px; }
+.hero-eyebrow{ margin-bottom:6px; }
 .hero .eyebrow{ color:#fff; }
 .hero h1{ color:#fff; }
 .hero .hero-lead{ color:rgba(255,255,255,.9); margin-bottom:0; }
-.hero .hero-note{ color:rgba(255,255,255,.62); text-align:center; margin-top:26px; }
+
+/* Logo: el hueco lo reserva .hero-logo-slot; con JS el logo se vuelve
+   fijo y se achica hasta anclarse en el header, junto a "Gurí Cafetería". */
+.hero-logo-slot{
+  width:min(clamp(222px, 29.4vw, 329px), 36svh);
+  aspect-ratio:1;
+  margin:0 auto 16px;
+}
 .hero-logo{
-  width:clamp(185px, 24.5vw, 274px); height:auto; aspect-ratio:1;
-  object-fit:cover; border-radius:50%; margin:4px auto 18px;
+  display:block;
+  width:100%; height:100%;
+  object-fit:cover; border-radius:50%;
   border:3px solid rgba(255,255,255,.55); box-shadow:var(--shadow);
   animation:logo-bob 7s ease-in-out infinite;
 }
-@keyframes logo-bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+@keyframes logo-bob{ 0%,100%{ translate:0 0; } 50%{ translate:0 -5px; } }
 @media (prefers-reduced-motion: reduce){ .hero-logo{ animation:none; } }
+.logo-dock .hero-logo{
+  position:fixed; top:0; left:0; z-index:101;
+  transform-origin:0 0;
+  will-change:transform;
+  pointer-events:none;
+}
+.logo-dock .hero-logo.is-moving{ animation:none; }
+.logo-dock .hero-logo.is-docked{ box-shadow:0 4px 10px -4px rgba(0,0,0,.45); }
+
 .hero h1{
-  font-size:clamp(3.6rem, 8vw, 6.8rem);
-  margin:.1em 0 .18em;
+  font-size:clamp(2.4rem, min(6.2vw, 10svh), 5.4rem);
+  margin:0 0 .2em;
   letter-spacing:-.01em;
 }
-.hero-lead{ max-width:34ch; font-size:1.2rem; color:var(--brown); margin:0 0 30px; }
+.hero-lead{ max-width:40ch; font-size:1.15rem; color:var(--brown); margin:0 0 30px; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:22px; }
-.hero-note{ font-size:.9rem; color:var(--muted); margin:0; letter-spacing:.02em; }
 
 .hero-media{
   position:relative;
   align-self:stretch;
   min-width:0;
-  min-height:360px;
+  min-height:320px;
   border:12px solid var(--cream-soft);
   box-shadow:0 32px 64px -32px rgba(0,0,0,.75);
 }
@@ -249,22 +275,27 @@ a:hover{ color:var(--terracotta); }
   filter:saturate(.9) contrast(1.08) brightness(.96);
 }
 
+/* Móvil: una columna; la foto toma el espacio que sobra para no pasarse de pantalla */
 @media (max-width:860px){
-  .hero-grid{ grid-template-columns:minmax(0,1fr); gap:36px; }
+  .hero > .container{ flex:1; display:flex; flex-direction:column; }
+  .hero-grid{ flex:1; display:flex; flex-direction:column; gap:22px; }
   .hero-copy{ text-align:center; }
+  .hero{ padding-top:clamp(26px, 4svh, 44px); }
+  .hero-logo-slot{ width:min(222px, 25svh); margin-bottom:12px; }
+  .hero-lead{ margin-inline:auto; font-size:1.05rem; }
   .hero-media{
-    align-self:start;
-    aspect-ratio:4/5;
-    min-height:0;
+    flex:1 1 auto;
+    align-self:center;
+    min-height:110px;
     width:100%;
-    max-width:420px;
-    margin-inline:auto;
-    border-width:10px;
+    max-width:520px;
+    border-width:8px;
   }
+  .hero-media img{ object-position:50% 40%; }
 }
 @media (max-width:520px){
   .hero-eyebrow{ letter-spacing:.12em; font-size:.7rem; }
-  .hero h1{ font-size:clamp(2.6rem, 12vw, 3.6rem); }
+  .hero h1{ font-size:clamp(2.2rem, 11.5vw, 3.2rem); }
 }
 
 /* ---------- Marquee ---------- */
@@ -274,6 +305,8 @@ a:hover{ color:var(--terracotta); }
   color:var(--brown);
   border-block:1px solid rgba(90,58,34,.22);
   padding:14px 0;
+  height:var(--marquee-h);
+  line-height:28px;
 }
 .marquee-track{
   display:flex; width:max-content;
